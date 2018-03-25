@@ -1,6 +1,6 @@
 # Node.js BlogApp
 
-This is a user login and registration,and create blogs app using Node.js, Express, Passport and Mongoose.  
+This is a user login and registration,and create blogs app using Node.js, Express, Passport,RestApi and Mongoose.  
 
 ### Version
 1.1.0

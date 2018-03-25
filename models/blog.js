@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+var Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 // Blog Schema
 const blogSchema = mongoose.Schema({
 	title:{
@@ -11,11 +12,7 @@ const blogSchema = mongoose.Schema({
 		required: true
 	},
 
-	author :
-	      {
-	      	type : String,
-	      	required : true
-	      }
+	authorid  : ObjectId
 	 
 });
 
@@ -32,14 +29,15 @@ module.exports.getBlogById = (id, callback) => {
 }
 
 // Add Blog
-module.exports.createBlog = (newBlog, callback)=>{
-	bcrypt.genSalt(10, (err, salt) =>{
-	    bcrypt.hash(newUser.title, salt,(err, hash) =>{
-	        newBlog.title = title;
-	        newBlog.save(callback);
-	    });
-	});
-}
+// module.exports.createBlog = (newBlog, callback)=>{
+// 	// bcrypt.genSalt(10, (err, salt) =>{
+// 	//     bcrypt.hash(newUser.title, salt,(err) =>{
+// 	//         newBlog.title = title;
+// 	//         newBlog.save(callback);
+// 	//     });
+// 	// });
+// 	Blog.create(newBlog, callback);
+// }
 
 // Update Blog
 module.exports.updateBlog = (id, blog, options, callback) => {

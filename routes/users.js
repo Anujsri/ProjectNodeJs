@@ -20,7 +20,7 @@ router.get('/blog', (req, res)=>{
 	res.render('blog');
 });
 
- 
+ var Userid;
 
 // Register User
 router.post('/register', (req, res)=>{
@@ -95,7 +95,10 @@ passport.deserializeUser((id, done) =>{
 router.post('/login',
   passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
   (req, res)=> {
+   Userid=user._id;
+   console.log("User Is:"+Userid);
     res.redirect('/');
+
   });
 
 router.get('/logout', (req, res)=>{
@@ -106,52 +109,47 @@ router.get('/logout', (req, res)=>{
 	res.redirect('/users/login');
 });
 
-
-
-
 router.post('/blog', (req, res)=>{
 	var title = req.body.title;
 	var content = req.body.content;
-	var author = req.body.author;
-	 
+	var authorid = Userid;
+	  
 
 	// Validation
 	req.checkBody('title', 'Title is required').notEmpty();
 	req.checkBody('content', 'Content is required').notEmpty();
-	req.checkBody('author', 'Author is not valid').notEmpty();
+	// req.checkBody('author', 'Author is not valid').notEmpty();
 	 
-	var errors = req.validationErrors();
-
+	// var errors = req.validationErrors();
+	var errors = false;
 	if(errors){
 		res.render('blog',{
-			errors:errors
+			errors:errors	
 		});
+		 
 	} else {
+		 
 		var newBlog = new Blog({
 			title: title,
 			content:content,
-			author: author,
+			authorid: authorid,
 			 
 		});
 
-		Blog.createBlog(newBlog,(err, blog)=>{
-			if(err) throw err;
-			console.log(blog);
+		Blog.create(newBlog,(err, blog)=>{
+			if(err) throw err;	
 		});
 
 		req.flash('success_msg', 'Your Content has been saved');
 
-		res.redirect('index');
+		res.redirect('/');
 	}
 });
 
-router.get('/api/blogs', (req, res) => {
-	Book.getBlogs((err, blogs) => {
-		if(err){
-			throw err;
-		}
-		res.json(blogs);
-	});
+Blog.findById("5ab7c39f89e6be37c0e33891", function(err, response){
+ console.log(response);
 });
+
+ 
 
 module.exports = router;

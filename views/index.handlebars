@@ -1,11 +1,30 @@
- 
+
 <div class="container">
+ 
+ <h4>Welcome to your dashboard : {{user.name}}</h4> 
+ </div>
+ <div class="container-fluid" style="margin-top:40px">
 <div class="row">
 <div class="col-md-2"></div>
-<div class="col-md-4"><h2 class="page-header">Dashboard</h2></div>
-<div class="col-md-4"><p>Welcome to your dashboard</p></div>
+<div class="col-md-2" style="border:1px solid red">
+ <ul>
+            
+              <li role="presentation"><a href="/">Following</a></li>
+              <li role="presentation"><a href="/">Followers</a></li>
+               <li role="presentation"><a href="/users/blog">Delete Blog</a></li>
+               <li role="presentation"><a href="/">Edit Blog</a></li>
+
+            
+          </ul>
+     </div>
+     <div class="col-md-1"></div>
+<div class="col-md-5" style="border:1px solid blue"><center><h5>Latest Blog Post:</center></h5>
+<h5>Title:{{blog.title}}</h5>
+<h5>Content: {{blog.content}}</h5>
+<p>It provides a platform to the student to get an appointment for meeting with faculty, and student can also find how many projects are running under a faculty so he/she can work on that project. And… </p>
+
+</div>
 <div class="col-md-2"></div>
 </div>
-Name:{{user.name}}
-Title : {{blog.title}}
 </div>
+
