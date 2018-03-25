@@ -46,5 +46,6 @@ module.exports.comparePassword = (candidatePassword, hash, callback)=>{
 }
 
 //database for blogs
+ 
 
  

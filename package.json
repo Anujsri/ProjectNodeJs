@@ -10,6 +10,7 @@
   "author": "Anuj Srivastava",
   "license": "NO_Lisence",
   "dependencies": {
+    "app": "^0.1.0",
     "bcryptjs": "*",
     "body-parser": "*",
     "connect": "^3.6.6",

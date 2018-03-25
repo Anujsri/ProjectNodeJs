@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
 
 // Blog Schema
 const blogSchema = mongoose.Schema({
@@ -10,39 +9,50 @@ const blogSchema = mongoose.Schema({
 	content:{
 		type: String,
 		required: true
-	}
+	},
+
+	author :
+	      {
+	      	type : String,
+	      	required : true
+	      }
 	 
 });
 
 const Blog = module.exports = mongoose.model('Blog', blogSchema);
 
-// Get Blogs
+// Get Blog
 module.exports.getBlogs = (callback, limit) => {
 	Blog.find(callback).limit(limit);
 }
 
-// Get Blogs
+// Get Blog
 module.exports.getBlogById = (id, callback) => {
 	Blog.findById(id, callback);
 }
 
-// Add Blogs
-module.exports.addBlog = (blog, callback) => {
-	Blog.create(blog, callback);
+// Add Blog
+module.exports.createBlog = (newBlog, callback)=>{
+	bcrypt.genSalt(10, (err, salt) =>{
+	    bcrypt.hash(newUser.title, salt,(err, hash) =>{
+	        newBlog.title = title;
+	        newBlog.save(callback);
+	    });
+	});
 }
 
-// Update Blogs
+// Update Blog
 module.exports.updateBlog = (id, blog, options, callback) => {
 	var query = {_id: id};
 	var update = {
 		title: blog.title,
-		genre: blog.content
+		content: blog.content,
 		 
 	}
 	Blog.findOneAndUpdate(query, update, options, callback);
 }
 
-// Delete Blogs
+// Delete Blog
 module.exports.removeBlog = (id, callback) => {
 	var query = {_id: id};
 	Blog.remove(query, callback);

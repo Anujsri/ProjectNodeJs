@@ -4,6 +4,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
+var Blog = require('../models/blog');
 
 // Register
 router.get('/register', (req, res)=>{
@@ -15,10 +16,11 @@ router.get('/login', (req, res)=>{
 	res.render('login');
 });
 //crate blog
-//router.get('/blog', (req, res)=>{
-	//res.render('blog');
-//});
+router.get('/blog', (req, res)=>{
+	res.render('blog');
+});
 
+ 
 
 // Register User
 router.post('/register', (req, res)=>{
@@ -102,6 +104,54 @@ router.get('/logout', (req, res)=>{
 	req.flash('success_msg', 'You are logged out');
 
 	res.redirect('/users/login');
+});
+
+
+
+
+router.post('/blog', (req, res)=>{
+	var title = req.body.title;
+	var content = req.body.content;
+	var author = req.body.author;
+	 
+
+	// Validation
+	req.checkBody('title', 'Title is required').notEmpty();
+	req.checkBody('content', 'Content is required').notEmpty();
+	req.checkBody('author', 'Author is not valid').notEmpty();
+	 
+	var errors = req.validationErrors();
+
+	if(errors){
+		res.render('blog',{
+			errors:errors
+		});
+	} else {
+		var newBlog = new Blog({
+			title: title,
+			content:content,
+			author: author,
+			 
+		});
+
+		Blog.createBlog(newBlog,(err, blog)=>{
+			if(err) throw err;
+			console.log(blog);
+		});
+
+		req.flash('success_msg', 'Your Content has been saved');
+
+		res.redirect('index');
+	}
+});
+
+router.get('/api/blogs', (req, res) => {
+	Book.getBlogs((err, blogs) => {
+		if(err){
+			throw err;
+		}
+		res.json(blogs);
+	});
 });
 
 module.exports = router;
