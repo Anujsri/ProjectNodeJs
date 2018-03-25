@@ -6,17 +6,22 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 
 // Register
-router.get('/register', function(req, res){
+router.get('/register', (req, res)=>{
 	res.render('register');
 });
 
 // Login
-router.get('/login', function(req, res){
+router.get('/login', (req, res)=>{
 	res.render('login');
 });
+//crate blog
+//router.get('/blog', (req, res)=>{
+	//res.render('blog');
+//});
+
 
 // Register User
-router.post('/register', function(req, res){
+router.post('/register', (req, res)=>{
 	var name = req.body.name;
 	var email = req.body.email;
 	var username = req.body.username;
@@ -45,26 +50,26 @@ router.post('/register', function(req, res){
 			password: password
 		});
 
-		User.createUser(newUser, function(err, user){
+		User.createUser(newUser,(err, user)=>{
 			if(err) throw err;
 			console.log(user);
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
 
-		res.redirect('/users/login');
+		res.redirect('users/login');
 	}
 });
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-   User.getUserByUsername(username, function(err, user){
+  (username, password, done) =>{
+   User.getUserByUsername(username,(err, user)=>{
    	if(err) throw err;
    	if(!user){
    		return done(null, false, {message: 'Unknown User'});
    	}
 
-   	User.comparePassword(password, user.password, function(err, isMatch){
+   	User.comparePassword(password, user.password,(err, isMatch)=>{
    		if(err) throw err;
    		if(isMatch){
    			return done(null, user);
@@ -75,23 +80,23 @@ passport.use(new LocalStrategy(
    });
   }));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) =>{
   done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  User.getUserById(id, function(err, user) {
+passport.deserializeUser((id, done) =>{
+  User.getUserById(id, (err, user)=> {
     done(err, user);
   });
 });
 
 router.post('/login',
   passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
-  function(req, res) {
-    res.redirect('/views/blogpost');
+  (req, res)=> {
+    res.redirect('/');
   });
 
-router.get('/logout', function(req, res){
+router.get('/logout', (req, res)=>{
 	req.logout();
 
 	req.flash('success_msg', 'You are logged out');

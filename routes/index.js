@@ -2,16 +2,15 @@ var express = require('express');
 var router = express.Router();
 
 // Get Homepage
-router.get('/', ensureAuthenticated, function(req, res){
-	res.render('index');
+router.get('/', ensureAuthenticated, (req, res)=>{
+	res.render('blog');
 });
 
 function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){
-		//return next();
-		res.redirect('/views/blogpost');
+		return next();
 	} else {
-		req.flash('error_msg','You are not logged in');
+		//req.flash('error_msg','You are not logged in');
 		res.redirect('/users/login');
 	}
 }
