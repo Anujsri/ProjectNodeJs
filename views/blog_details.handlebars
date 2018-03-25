@@ -1,0 +1,20 @@
+<a href="#/blogs">Go Back</a>
+<div class="panel panel-default" ng-init="getBlog()">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{blog.title}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      
+      <div class="col-md-8">
+        </p>{{blog.content}}</p>
+         
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pull-right">
+  <a href="#/blogs/edit/{{blog._id}}">Edit</a> |  <a href="#" ng-click="removeBlog(blog._id)">Delete</a>
+  </div>

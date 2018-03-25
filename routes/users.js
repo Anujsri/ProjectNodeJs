@@ -150,6 +150,43 @@ Blog.findById("5ab7c39f89e6be37c0e33891", function(err, response){
  console.log(response);
 });
 
- 
+ router.get('/api/blogs', (req, res) => {
+	Blog.getBlogs((err, blogs) => {
+		if(err){
+			throw err;
+		}
+		res.json(blogs);
+	});
+});
+
+router.get('/api/blogs/:_id', (req, res) => {
+	Blog.getBlogById(req.params._id, (err, blog) => {
+		if(err){
+			throw err;
+		}
+		res.json(blog);
+	});
+});
+
+router.put('/api/blogs/:_id', (req, res) => {
+	var id = req.params._id;
+	var blog = req.body;
+	Blog.updateBlog(id, blog, {}, (err, blog) => {
+		if(err){
+			throw err;
+		}
+		res.json(blog);
+	});
+});
+
+router.delete('/api/blogs/:_id', (req, res) => {
+	var id = req.params._id;
+	Blog.removeBlog(id, (err, blog) => {
+		if(err){
+			throw err;
+		}
+		res.json(blog);
+	});
+});
 
 module.exports = router;

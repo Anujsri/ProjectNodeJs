@@ -28,17 +28,6 @@ module.exports.getBlogById = (id, callback) => {
 	Blog.findById(id, callback);
 }
 
-// Add Blog
-// module.exports.createBlog = (newBlog, callback)=>{
-// 	// bcrypt.genSalt(10, (err, salt) =>{
-// 	//     bcrypt.hash(newUser.title, salt,(err) =>{
-// 	//         newBlog.title = title;
-// 	//         newBlog.save(callback);
-// 	//     });
-// 	// });
-// 	Blog.create(newBlog, callback);
-// }
-
 // Update Blog
 module.exports.updateBlog = (id, blog, options, callback) => {
 	var query = {_id: id};
